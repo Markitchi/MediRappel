@@ -17,8 +17,8 @@ public class MainActivity : MauiAppCompatActivity
 
         base.OnCreate(savedInstanceState);
 
-        Window?.SetStatusBarColor(Android.Graphics.Color.Transparent);
-        Window?.SetNavigationBarColor(Android.Graphics.Color.Transparent);
+        Window?.SetStatusBarColor(Android.Graphics.Color.ParseColor("#00696D"));
+        Window?.SetNavigationBarColor(Android.Graphics.Color.ParseColor("#00696D"));
         Window?.AddFlags(WindowManagerFlags.DrawsSystemBarBackgrounds);
     }
 }
