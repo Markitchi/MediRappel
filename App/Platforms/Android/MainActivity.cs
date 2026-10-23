@@ -24,8 +24,25 @@ public class MainActivity : MauiAppCompatActivity
 
         // Icônes claires (blanches) sur le fond sombre #00696D de la charte,
         // pour que batterie, réseau et notifications restent lisibles.
+        // LightStatusBar DOIT être activé pour des icônes claires sur fond sombre.
         var uiFlags = (int)Window.DecorView.SystemUiVisibility;
-        uiFlags &= ~(int)Android.Views.SystemUiFlags.LightStatusBar;
+        uiFlags |= (int)Android.Views.SystemUiFlags.LightStatusBar;
+        Window.DecorView.SystemUiVisibility = (Android.Views.StatusBarVisibility)uiFlags;
+    }
+
+    // MAUI peut réinitialiser la barre de statut après OnCreate ; on la réapplique
+    // à chaque reprise de l'activité pour garantir le vert de la charte.
+    protected override void OnResume()
+    {
+        base.OnResume();
+
+        Window?.SetStatusBarColor(Android.Graphics.Color.ParseColor("#00696D"));
+        Window?.SetNavigationBarColor(Android.Graphics.Color.ParseColor("#00696D"));
+        Window?.AddFlags(WindowManagerFlags.DrawsSystemBarBackgrounds);
+        Window?.ClearFlags(WindowManagerFlags.TranslucentStatus | WindowManagerFlags.TranslucentNavigation);
+
+        var uiFlags = (int)Window.DecorView.SystemUiVisibility;
+        uiFlags |= (int)Android.Views.SystemUiFlags.LightStatusBar;
         Window.DecorView.SystemUiVisibility = (Android.Views.StatusBarVisibility)uiFlags;
     }
 }
