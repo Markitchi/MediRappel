@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Écran · Nouveau rendez-vous — création réelle d'un rendez-vous. -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:c="clr-namespace:MediRappel.Controls"
+             x:Class="MediRappel.Pages.NouveauRendezVousPage"
+             BackgroundColor="{StaticResource Surface}"
+             Shell.NavBarIsVisible="False">
+    <Grid RowDefinitions="Auto,Auto,*">
+        <c:BarreSysteme Grid.Row="0" x:Name="barre" />
+
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,*" Padding="12,4,16,6" ColumnSpacing="6">
+            <Label Grid.Column="0" Text="arrow_back" FontFamily="MaterialIcons" FontSize="24"
+                   TextColor="{StaticResource OnSurface}" Padding="8" VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Retour" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Grid.Column="1" Text="Nouveau rendez-vous" Style="{StaticResource TitleLarge}"
+                   VerticalOptions="Center" />
+        </Grid>
+
+        <ScrollView Grid.Row="2">
+            <VerticalStackLayout Padding="24,4,24,24" Spacing="0">
+
+                <Label Text="Date et heure" FontSize="12" FontAttributes="Bold"
+                       TextColor="{StaticResource OnSurfaceVariant}" />
+                <Border Style="{StaticResource Card}" Margin="0,6,0,0" Padding="14,8">
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2">
+                            <Label Text="Date" FontSize="12"
+                                   TextColor="{StaticResource OnSurfaceVariant}" />
+                            <DatePicker Date="{Binding DateSelection}" Format="dd/MM/yyyy"
+                                        TextColor="{StaticResource OnSurface}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Label Text="Heure" FontSize="12"
+                                   TextColor="{StaticResource OnSurfaceVariant}" />
+                            <TimePicker Time="{Binding HeureSelection}" Format="HH:mm"
+                                        TextColor="{StaticResource OnSurface}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <Label Text="Praticien" FontSize="12" FontAttributes="Bold"
+                       TextColor="{StaticResource OnSurfaceVariant}" Margin="0,20,0,0" />
+                <VerticalStackLayout Spacing="14" Margin="0,8,0,0">
+                    <c:ChampTexte Libelle="Nom du médecin"
+                                  Valeur="{Binding Medecin, Mode=TwoWay}"
+                                  Indice="Dr ..."
+                                  OeilVisible="False"
+                                  Erreur="Indiquez le nom du médecin."
+                                  ErreurVisible="{Binding MedecinErreur}" />
+                    <c:ChampTexte Libelle="Spécialité"
+                                  Valeur="{Binding Specialite, Mode=TwoWay}"
+                                  Indice="Cardiologue, généraliste…"
+                                  OeilVisible="False" />
+                    <c:ChampTexte Libelle="Lieu"
+                                  Valeur="{Binding Lieu, Mode=TwoWay}"
+                                  Indice="Cabinet, clinique, adresse…"
+                                  OeilVisible="False" />
+                    <c:ChampTexte Libelle="Téléphone"
+                                  Valeur="{Binding Telephone, Mode=TwoWay}"
+                                  Indice="+229 …"
+                                  CleClavier="Telephone"
+                                  OeilVisible="False" />
+                </VerticalStackLayout>
+
+                <Label Text="Motif" FontSize="12" FontAttributes="Bold"
+                       TextColor="{StaticResource OnSurfaceVariant}" Margin="0,20,0,0" />
+                <c:ChampTexte Libelle=""
+                              Valeur="{Binding Motif, Mode=TwoWay}"
+                              Indice="Consultation de suivi, contrôle…"
+                              OeilVisible="False" />
+
+                <Label Text="Notes personnelles" FontSize="12" FontAttributes="Bold"
+                       TextColor="{StaticResource OnSurfaceVariant}" Margin="0,16,0,0" />
+                <Border Style="{StaticResource Card}" Margin="0,6,0,0" Padding="12,4">
+                    <Editor Text="{Binding Notes, Mode=TwoWay}" AutoSize="TextChanges"
+                            Placeholder="Documents à apporter, questions à poser…"
+                            PlaceholderColor="{StaticResource OnSurfaceVariant}"
+                            TextColor="{StaticResource OnSurface}" HeightRequest="80" />
+                </Border>
+
+                <!-- Rappel -->
+                <Border Style="{StaticResource Card}" Margin="0,16,0,0" Padding="14,13">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <VerticalStackLayout Grid.Column="0" Spacing="3">
+                            <Label Text="Me rappeler ce rendez-vous" FontSize="15"
+                                   FontAttributes="Bold" />
+                            <Label Text="Une notification la veille" FontSize="12"
+                                   TextColor="{StaticResource OnSurfaceVariant}" />
+                        </VerticalStackLayout>
+                        <Switch Grid.Column="1" IsToggled="{Binding Rappel, Mode=TwoWay}"
+                                OnColor="{StaticResource Primary}" VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <!-- Erreur serveur -->
+                <Border BackgroundColor="{StaticResource MissedContainer}"
+                        StrokeThickness="0" StrokeShape="RoundRectangle 12"
+                        Padding="14,12" Margin="0,16,0,0"
+                        IsVisible="{Binding ErreurVisible}">
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Text="error" FontFamily="MaterialIcons" FontSize="18"
+                               TextColor="{StaticResource OnMissedContainer}"
+                               VerticalOptions="Center" />
+                        <Label Text="{Binding ErreurMessage}" FontSize="13"
+                               TextColor="{StaticResource OnMissedContainer}"
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+
+                <Button Text="{Binding BoutonTexte}" Style="{StaticResource BtnPrimary}"
+                        IsEnabled="{Binding NonOccupe}"
+                        Margin="0,20,0,0" Clicked="Enregistrer" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

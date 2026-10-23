@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Écran 07 · Rendez-vous — prochain rendez-vous d'abord, groupé par échéance. -->
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:v="clr-namespace:MediRappel.Vues"
+             x:Class="MediRappel.Vues.VueRendezVous">
+    <ScrollView>
+        <VerticalStackLayout Spacing="0" Padding="0,0,0,110">
+
+            <Label Text="Rendez-vous" Style="{StaticResource HeadlineMedium}"
+                   Margin="24,14,24,0" />
+
+            <!-- Compteurs / filtre -->
+            <HorizontalStackLayout Spacing="8" Margin="24,12,24,0">
+                <Border Style="{StaticResource Chip}" StrokeThickness="0"
+                        BackgroundColor="{Binding FiltreAVenir, Converter={StaticResource SelFond}}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="AvenirTapped" />
+                    </Border.GestureRecognizers>
+                    <Label Text="{Binding LabelAvenir}" FontSize="14" FontAttributes="Bold"
+                           TextColor="{Binding FiltreAVenir, Converter={StaticResource SelTexte}}"
+                           VerticalOptions="Center" />
+                </Border>
+                <Border Style="{StaticResource Chip}" StrokeThickness="0"
+                        BackgroundColor="{Binding FiltrePasses, Converter={StaticResource SelFond}}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="PassesTapped" />
+                    </Border.GestureRecognizers>
+                    <Label Text="{Binding LabelPasses}" FontSize="14" FontAttributes="Bold"
+                           TextColor="{Binding FiltrePasses, Converter={StaticResource SelTexte}}"
+                           VerticalOptions="Center" />
+                </Border>
+            </HorizontalStackLayout>
+
+            <!-- Liste -->
+            <VerticalStackLayout Spacing="10" Margin="24,16,24,0"
+                                 BindableLayout.ItemsSource="{Binding Items}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="{Binding Groupe}" IsVisible="{Binding EstGroupe}"
+                                   FontSize="12" FontAttributes="Bold" CharacterSpacing="1"
+                                   TextColor="{StaticResource OnSurfaceVariant}"
+                                   Margin="0,6,0,0" />
+
+                            <Border BackgroundColor="{StaticResource TertiaryContainer}"
+                                    StrokeThickness="0" StrokeShape="RoundRectangle 16"
+                                    Padding="14,13" IsVisible="{Binding EstGroupe, Converter={StaticResource NonInvert}}">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Ouvrir" />
+                                </Border.GestureRecognizers>
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                    <Border Grid.Column="0" BackgroundColor="{StaticResource Tertiary}"
+                                            StrokeThickness="0" StrokeShape="RoundRectangle 8"
+                                            Padding="10,8" VerticalOptions="Start">
+                                        <VerticalStackLayout Spacing="0" HorizontalOptions="Center">
+                                            <Label Text="{Binding Jour}" FontSize="14" FontAttributes="Bold"
+                                                   TextColor="{StaticResource OnTertiary}"
+                                                   HorizontalTextAlignment="Center" />
+                                            <Label Text="{Binding Heure}" FontSize="11"
+                                                   TextColor="{StaticResource OnTertiary}"
+                                                   HorizontalTextAlignment="Center" />
+                                        </VerticalStackLayout>
+                                    </Border>
+
+                                    <VerticalStackLayout Grid.Column="1" Spacing="3">
+                                        <Label Text="{Binding Medecin}" FontSize="15" FontAttributes="Bold"
+                                               TextColor="{StaticResource OnTertiaryContainer}" />
+                                        <Label Text="{Binding Specialite}" FontSize="13"
+                                               TextColor="{StaticResource OnTertiaryContainer}" />
+                                        <Label Text="{Binding Lieu}" FontSize="12"
+                                               TextColor="{StaticResource OnTertiaryContainer}" />
+                                    </VerticalStackLayout>
+
+                                    <Label Grid.Column="2" Text="{Binding JoursRestants}"
+                                           FontSize="13" FontAttributes="Bold"
+                                           TextColor="{StaticResource Tertiary}"
+                                           VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <!-- État vide -->
+            <VerticalStackLayout Spacing="6" HorizontalOptions="Center" Margin="24,30,24,0"
+                                 IsVisible="{Binding VideVisible}">
+                <Label Text="event_busy" FontFamily="MaterialIcons" FontSize="30"
+                       TextColor="{StaticResource OnSurfaceVariant}" HorizontalOptions="Center" />
+                <Label Text="{Binding VideTitre}" Style="{StaticResource TitleSmall}"
+                       HorizontalTextAlignment="Center" />
+                <Label Text="{Binding VideTexte}" FontSize="12"
+                       TextColor="{StaticResource OnSurfaceVariant}"
+                       HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentView>

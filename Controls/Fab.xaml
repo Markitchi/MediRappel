@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- FAB (floating action button) étendu : icône + libellé. -->
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MediRappel.Controls.Fab"
+             x:Name="racine">
+    <Border BackgroundColor="{StaticResource PrimaryContainer}"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 16"
+            Padding="18,0" HeightRequest="52">
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Tapped="Cliquer" />
+        </Border.GestureRecognizers>
+        <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+            <Label Text="{Binding Source={x:Reference racine}, Path=Icone}"
+                   FontFamily="MaterialIcons" FontSize="20"
+                   TextColor="{StaticResource OnPrimaryContainer}"
+                   VerticalOptions="Center" />
+            <Label Text="{Binding Source={x:Reference racine}, Path=Libelle}"
+                   FontSize="14" FontAttributes="Bold"
+                   TextColor="{StaticResource OnPrimaryContainer}"
+                   VerticalOptions="Center" />
+        </HorizontalStackLayout>
+    </Border>
+</ContentView>

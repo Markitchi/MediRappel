@@ -1,0 +1,11 @@
+{
+  // ── Recommandations d'extensions pour ouvrir et lancer MediRappel dans VS Code ──
+  "recommendations": [
+    "ms-dotnettools.csdevkit",
+    "ms-dotnettools.csharp",
+    "ms-dotnettools.vscode-dotnet-runtime",
+    "ms-dotnettools.dotnet-maui",
+    "redhat.vscode-xml"
+  ],
+  "unwantedRecommendations": []
+}

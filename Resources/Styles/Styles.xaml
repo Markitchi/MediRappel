@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!-- MediRappel — styles M3 : echelle typo, boutons, champs, cartes, chips, nav -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- ===================== Typographie M3 ===================== -->
+    <!-- Défaut de sécurité : tout Label non stylé reste lisible sur fond clair,
+         quel que soit le thème système. -->
+    <Style TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
+    </Style>
+
+    <Style x:Key="DisplaySmall" TargetType="Label">
+        <Setter Property="FontSize" Value="36" />
+        <Setter Property="FontAttributes" Value="None" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
+        <Setter Property="LineHeight" Value="1.1" />
+    </Style>
+
+    <Style x:Key="HeadlineMedium" TargetType="Label">
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="FontAttributes" Value="None" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
+    </Style>
+
+    <Style x:Key="HeadlineSmall" TargetType="Label">
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontAttributes" Value="None" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
+    </Style>
+
+    <Style x:Key="TitleLarge" TargetType="Label">
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="FontAttributes" Value="None" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
+    </Style>
+
+    <Style x:Key="TitleMedium" TargetType="Label">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
+        <Setter Property="LineHeight" Value="1.3" />
+    </Style>
+
+    <Style x:Key="TitleSmall" TargetType="Label">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
+    </Style>
+
+    <Style x:Key="BodyLarge" TargetType="Label">
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontAttributes" Value="None" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
+        <Setter Property="LineHeight" Value="1.45" />
+    </Style>
+
+    <Style x:Key="BodyMedium" TargetType="Label">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontAttributes" Value="None" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
+        <Setter Property="LineHeight" Value="1.4" />
+    </Style>
+
+    <Style x:Key="BodySmall" TargetType="Label">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontAttributes" Value="None" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurfaceVariant}" />
+    </Style>
+
+    <Style x:Key="LabelLarge" TargetType="Label">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
+    </Style>
+
+    <Style x:Key="LabelMedium" TargetType="Label">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurfaceVariant}" />
+    </Style>
+
+    <Style x:Key="LabelSmall" TargetType="Label">
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurfaceVariant}" />
+    </Style>
+
+    <Style x:Key="Muted" TargetType="Label" BasedOn="{StaticResource BodyMedium}">
+        <Setter Property="TextColor" Value="{StaticResource OnSurfaceVariant}" />
+    </Style>
+
+    <!-- ===================== Boutons ===================== -->
+    <!-- Bouton primaire plein : h 46, rayon pleine boucle -->
+    <Style x:Key="BtnPrimary" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource Primary}" />
+        <Setter Property="TextColor" Value="{StaticResource OnPrimary}" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="HeightRequest" Value="46" />
+        <Setter Property="CornerRadius" Value="23" />
+        <Setter Property="Padding" Value="24,0" />
+        <Setter Property="BorderWidth" Value="0" />
+    </Style>
+
+    <Style x:Key="BtnTonal" TargetType="Button" BasedOn="{StaticResource BtnPrimary}">
+        <Setter Property="BackgroundColor" Value="{StaticResource SecondaryContainer}" />
+        <Setter Property="TextColor" Value="{StaticResource OnSecondaryContainer}" />
+    </Style>
+
+    <Style x:Key="BtnTertiary" TargetType="Button" BasedOn="{StaticResource BtnPrimary}">
+        <Setter Property="BackgroundColor" Value="{StaticResource TertiaryContainer}" />
+        <Setter Property="TextColor" Value="{StaticResource OnTertiaryContainer}" />
+    </Style>
+
+    <Style x:Key="BtnDanger" TargetType="Button" BasedOn="{StaticResource BtnPrimary}">
+        <Setter Property="BackgroundColor" Value="{StaticResource ErrorContainer}" />
+        <Setter Property="TextColor" Value="{StaticResource OnErrorContainer}" />
+    </Style>
+
+    <Style x:Key="BtnText" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource Primary}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="Padding" Value="12,0" />
+        <Setter Property="BorderWidth" Value="0" />
+    </Style>
+
+    <Style x:Key="BtnFab" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryContainer}" />
+        <Setter Property="TextColor" Value="{StaticResource OnPrimaryContainer}" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="HeightRequest" Value="52" />
+        <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="Padding" Value="18,0" />
+        <Setter Property="BorderWidth" Value="0" />
+    </Style>
+
+    <!-- ===================== Champs (outlined, label flottant) ===================== -->
+    <Style x:Key="Field" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource Surface}" />
+        <Setter Property="Stroke" Value="{StaticResource Outline}" />
+        <Setter Property="StrokeThickness" Value="1.5" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+        <Setter Property="HeightRequest" Value="56" />
+        <Setter Property="Padding" Value="16,0" />
+    </Style>
+
+    <Style x:Key="FieldInput" TargetType="Entry">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurface}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="PlaceholderColor" Value="{StaticResource OnSurfaceVariant}" />
+        <Setter Property="HeightRequest" Value="52" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- ===================== Cartes ===================== -->
+    <Style x:Key="Card" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="{StaticResource SurfaceContainer}" />
+        <Setter Property="Stroke" Value="{StaticResource OutlineVariant}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 16" />
+        <Setter Property="Padding" Value="16,14" />
+    </Style>
+
+    <Style x:Key="CardFlat" TargetType="Border" BasedOn="{StaticResource Card}">
+        <Setter Property="StrokeThickness" Value="0" />
+    </Style>
+
+    <!-- ===================== Chips ===================== -->
+    <Style x:Key="Chip" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="Stroke" Value="{StaticResource OutlineVariant}" />
+        <Setter Property="StrokeThickness" Value="1.5" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+        <Setter Property="Padding" Value="14,8" />
+        <Setter Property="HeightRequest" Value="36" />
+    </Style>
+
+    <Style x:Key="ChipActive" TargetType="Border" BasedOn="{StaticResource Chip}">
+        <Setter Property="BackgroundColor" Value="{StaticResource SecondaryContainer}" />
+        <Setter Property="Stroke" Value="{StaticResource SecondaryContainer}" />
+    </Style>
+
+    <!-- ===================== Icônes ===================== -->
+    <Style x:Key="IconLabel" TargetType="Label">
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="TextColor" Value="{StaticResource OnSurfaceVariant}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+    </Style>
+
+    <!-- ===================== Separateur ===================== -->
+    <Style x:Key="Divider" TargetType="BoxView">
+        <Setter Property="BackgroundColor" Value="{StaticResource OutlineVariant}" />
+        <Setter Property="HeightRequest" Value="1" />
+        <Setter Property="Margin" Value="0,8" />
+    </Style>
+
+</ResourceDictionary>

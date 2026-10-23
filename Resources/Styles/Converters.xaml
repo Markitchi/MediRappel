@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:cv="clr-namespace:MediRappel.Converters">
+
+    <cv:EtatVersCouleur x:Key="EtatCouleur" />
+    <cv:EtatVersIcone x:Key="EtatIcone" />
+    <cv:StatutVersFond x:Key="StatutFond" />
+    <cv:StatutVersTexte x:Key="StatutTexte" />
+    <cv:BooleenVersInvert x:Key="NonInvert" />
+    <cv:SelectionVersFond x:Key="SelFond" />
+    <cv:SelectionVersTexte x:Key="SelTexte" />
+    <cv:VersVisible x:Key="VersVisible" />
+    <cv:VersTaille x:Key="Taille" />
+    <cv:TendanceVersCouleur x:Key="TendanceCouleur" />
+
+</ResourceDictionary>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Hôte des 4 destinations principales. Barre système en haut, nav custom en bas,
+     FAB contextuel (varie selon l'onglet actif). -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:c="clr-namespace:MediRappel.Controls"
+             xmlns:v="clr-namespace:MediRappel.Vues"
+             x:Class="MediRappel.Pages.MainPage"
+             BackgroundColor="{StaticResource Surface}"
+             Shell.NavBarIsVisible="False">
+    <Grid RowDefinitions="Auto,*,Auto">
+        <c:BarreSysteme Grid.Row="0" x:Name="barre" />
+
+        <!-- Contenu de l'onglet actif -->
+        <Grid Grid.Row="1" x:Name="conteneur">
+            <v:VueAccueil      x:Name="vAccueil" IsVisible="True" />
+            <v:VueOrdonnances  x:Name="vOrdo"    IsVisible="False" />
+            <v:VueRendezVous   x:Name="vRdv"     IsVisible="False" />
+            <v:VueHistorique   x:Name="vHist"    IsVisible="False" />
+
+            <!-- FAB contextuel -->
+            <c:Fab x:Name="fab"
+                   HorizontalOptions="End" VerticalOptions="End"
+                   Margin="0,0,16,14" />
+        </Grid>
+
+        <c:BarreNavigation Grid.Row="2" x:Name="nav" ActiveIndex="0" />
+    </Grid>
+</ContentPage>

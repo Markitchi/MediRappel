@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Bandeau d'état réseau persistant : texte + icône, jamais la couleur seule. -->
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MediRappel.Controls.BandeauReseau"
+             x:Name="racine">
+    <Border BackgroundColor="{StaticResource OfflineBg}"
+            Stroke="Transparent"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 12"
+            Padding="14,10"
+            Margin="16,4,16,8"
+            IsVisible="{Binding Source={x:Reference racine}, Path=Afficher}">
+        <VerticalStackLayout Spacing="8">
+            <HorizontalStackLayout Spacing="8">
+                <Label Text="cloud_off" FontFamily="MaterialIcons" FontSize="18"
+                       TextColor="{StaticResource OnSurface}" VerticalOptions="Center" />
+                <Label Text="{Binding Source={x:Reference racine}, Path=Titre}"
+                       FontSize="12" FontAttributes="Bold" CharacterSpacing="1.1"
+                       TextColor="{StaticResource OnSurface}" VerticalOptions="Center" />
+                <Label Text="expand_more" FontFamily="MaterialIcons" FontSize="18"
+                       IsVisible="{Binding Source={x:Reference racine}, Path=Depliable}"
+                       TextColor="{StaticResource OnSurfaceVariant}"
+                       HorizontalOptions="End" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <Label Text="{Binding Source={x:Reference racine}, Path=Message}"
+                   FontSize="13"
+                   TextColor="{StaticResource OnSurface}" />
+            <Label Text="{Binding Source={x:Reference racine}, Path=TexteAction}"
+                   FontSize="13" FontAttributes="Bold" TextColor="{StaticResource Primary}"
+                   IsVisible="{Binding Source={x:Reference racine}, Path=ActionVisible}" />
+        </VerticalStackLayout>
+    </Border>
+</ContentView>

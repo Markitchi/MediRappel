@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Écran · Ajouter une prise — crée plusieurs prises (heures libres + répétition). -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:c="clr-namespace:MediRappel.Controls"
+             xmlns:m="clr-namespace:MediRappel.Models"
+             x:Class="MediRappel.Pages.NouvellePrisePage"
+             BackgroundColor="{StaticResource Surface}"
+             Shell.NavBarIsVisible="False">
+    <Grid RowDefinitions="Auto,Auto,*">
+        <c:BarreSysteme Grid.Row="0" x:Name="barre" />
+
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,*" Padding="12,4,16,6" ColumnSpacing="6">
+            <Label Grid.Column="0" Text="arrow_back" FontFamily="MaterialIcons" FontSize="24"
+                   TextColor="{StaticResource OnSurface}" Padding="8" VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Retour" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Grid.Column="1" Text="Ajouter une prise" Style="{StaticResource TitleLarge}"
+                   VerticalOptions="Center" />
+        </Grid>
+
+        <ScrollView Grid.Row="2">
+            <VerticalStackLayout Padding="24,4,24,24" Spacing="0">
+
+                <!-- Médicament -->
+                <Label Text="Médicament" FontSize="12" FontAttributes="Bold"
+                       TextColor="{StaticResource OnSurfaceVariant}" />
+                <Border Style="{StaticResource Field}" Margin="0,6,0,0" Padding="12,0">
+                    <Picker ItemsSource="{Binding ChoixMedicaments}"
+                            SelectedItem="{Binding MedicamentChoisi, Mode=TwoWay}"
+                            Title="Choisir un médicament"
+                            TitleColor="{StaticResource OnSurfaceVariant}"
+                            TextColor="{StaticResource OnSurface}"
+                            FontSize="16" VerticalOptions="Center" />
+                </Border>
+
+                <c:ChampTexte Libelle="Nom du médicament"
+                              Valeur="{Binding MedicamentLibre, Mode=TwoWay}"
+                              Indice="Ex. Amoxicilline"
+                              OeilVisible="False"
+                              Erreur="Indiquez le nom du médicament."
+                              ErreurVisible="{Binding MedErreur}"
+                              Aide="Ce médicament n'est pas dans une ordonnance ? Saisissez son nom ici."
+                              AideVisible="{Binding AfficheLibre}"
+                              IsVisible="{Binding AfficheLibre}"
+                              Margin="0,12,0,0" />
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,12,0,0">
+                    <c:ChampTexte Grid.Column="0" Libelle="Dosage"
+                                  Valeur="{Binding Dosage, Mode=TwoWay}"
+                                  Indice="Ex. 500 mg"
+                                  OeilVisible="False" />
+                    <c:ChampTexte Grid.Column="1" Libelle="Posologie"
+                                  Valeur="{Binding Posologie, Mode=TwoWay}"
+                                  Indice="Ex. 1 comprimé"
+                                  OeilVisible="False" />
+                </Grid>
+
+                <!-- Date de début -->
+                <Label Text="Date de début" FontSize="12" FontAttributes="Bold"
+                       TextColor="{StaticResource OnSurfaceVariant}" Margin="0,20,0,0" />
+                <Border Style="{StaticResource Card}" Margin="0,6,0,0" Padding="14,8">
+                    <DatePicker Date="{Binding DateDebut, Mode=TwoWay}" Format="dd/MM/yyyy"
+                                TextColor="{StaticResource OnSurface}" />
+                </Border>
+
+                <!-- Nombre de prises par jour -->
+                <Label Text="Nombre de prises par jour" FontSize="12" FontAttributes="Bold"
+                       TextColor="{StaticResource OnSurfaceVariant}" Margin="0,20,0,0" />
+                <Border Style="{StaticResource Card}" Margin="0,6,0,0" Padding="14,6">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                        <Button Grid.Column="0" Text="-" Style="{StaticResource BtnTonal}"
+                                WidthRequest="56" HeightRequest="46" FontSize="20"
+                                IsEnabled="{Binding PeutRetirer}" Clicked="RetirerPrise" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="0"
+                                             VerticalOptions="Center" HorizontalOptions="Center">
+                            <Label Text="{Binding NbPrises}" FontSize="17" FontAttributes="Bold"
+                                   TextColor="{StaticResource OnSurface}" HorizontalTextAlignment="Center" />
+                            <Label Text="{Binding NbPrisesLibelle}" FontSize="11"
+                                   TextColor="{StaticResource OnSurfaceVariant}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                        <Button Grid.Column="2" Text="+" Style="{StaticResource BtnTonal}"
+                                WidthRequest="56" HeightRequest="46" FontSize="20"
+                                IsEnabled="{Binding PeutAjouter}" Clicked="AjouterPrise" />
+                    </Grid>
+                </Border>
+
+                <!-- Heures de prise -->
+                <Label Text="Heures de prise" FontSize="12" FontAttributes="Bold"
+                       TextColor="{StaticResource OnSurfaceVariant}" Margin="0,20,0,0"
+                       IsVisible="{Binding Plusieurs}" />
+                <VerticalStackLayout Spacing="10" Margin="0,8,0,0"
+                                     BindableLayout.ItemsSource="{Binding Prises}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="m:PriseHoraire">
+                            <Border Style="{StaticResource Card}" Padding="14,10">
+                                <VerticalStackLayout Spacing="8">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label Grid.Column="0" Text="Heure" FontSize="12"
+                                               TextColor="{StaticResource OnSurfaceVariant}" />
+                                        <Label Grid.Column="1" Text="remove_circle_outline"
+                                               FontFamily="MaterialIcons" FontSize="22"
+                                               TextColor="{StaticResource OnSurfaceVariant}"
+                                               IsVisible="{Binding Supprimable}">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="SupprimerPrise" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </Grid>
+
+                                    <TimePicker Time="{Binding Heure, Mode=TwoWay}" Format="HH:mm"
+                                                TextColor="{StaticResource OnSurface}" />
+
+                                    <!-- Créneaux rapides : présélection, reste éditable -->
+                                    <FlexLayout Direction="Row" Wrap="Wrap" Margin="0,2,0,0">
+                                        <Border Style="{StaticResource Chip}" StrokeThickness="0"
+                                                Margin="0,0,8,8"
+                                                BackgroundColor="{Binding EstMatin, Converter={StaticResource SelFond}}">
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="Presets" CommandParameter="08:00" />
+                                            </Border.GestureRecognizers>
+                                            <Label Text="Matin" FontSize="13" FontAttributes="Bold"
+                                                   TextColor="{Binding EstMatin, Converter={StaticResource SelTexte}}" />
+                                        </Border>
+                                        <Border Style="{StaticResource Chip}" StrokeThickness="0"
+                                                Margin="0,0,8,8"
+                                                BackgroundColor="{Binding EstMidi, Converter={StaticResource SelFond}}">
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="Presets" CommandParameter="12:00" />
+                                            </Border.GestureRecognizers>
+                                            <Label Text="Midi" FontSize="13" FontAttributes="Bold"
+                                                   TextColor="{Binding EstMidi, Converter={StaticResource SelTexte}}" />
+                                        </Border>
+                                        <Border Style="{StaticResource Chip}" StrokeThickness="0"
+                                                Margin="0,0,8,8"
+                                                BackgroundColor="{Binding EstSoir, Converter={StaticResource SelFond}}">
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="Presets" CommandParameter="20:00" />
+                                            </Border.GestureRecognizers>
+                                            <Label Text="Soir" FontSize="13" FontAttributes="Bold"
+                                                   TextColor="{Binding EstSoir, Converter={StaticResource SelTexte}}" />
+                                        </Border>
+                                        <Border Style="{StaticResource Chip}" StrokeThickness="0"
+                                                Margin="0,0,8,8"
+                                                BackgroundColor="{Binding EstCoucher, Converter={StaticResource SelFond}}">
+                                            <Border.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="Presets" CommandParameter="22:00" />
+                                            </Border.GestureRecognizers>
+                                            <Label Text="Coucher" FontSize="13" FontAttributes="Bold"
+                                                   TextColor="{Binding EstCoucher, Converter={StaticResource SelTexte}}" />
+                                        </Border>
+                                    </FlexLayout>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <!-- Répétition -->
+                <Label Text="Répétition" FontSize="12" FontAttributes="Bold"
+                       TextColor="{StaticResource OnSurfaceVariant}" Margin="0,20,0,0" />
+                <Border Style="{StaticResource Card}" Margin="0,6,0,0" Padding="14,4">
+                    <Picker ItemsSource="{Binding Repetitions}"
+                            SelectedItem="{Binding Repetition, Mode=TwoWay}"
+                            TextColor="{StaticResource OnSurface}" FontSize="16"
+                            VerticalOptions="Center" />
+                </Border>
+
+                <!-- Aperçu -->
+                <Border Style="{StaticResource CardFlat}" Margin="0,14,0,0"
+                        BackgroundColor="{StaticResource SecondaryContainer}">
+                    <VerticalStackLayout Spacing="6">
+                        <HorizontalStackLayout Spacing="7">
+                            <Label Text="event_available" FontFamily="MaterialIcons" FontSize="18"
+                                   TextColor="{StaticResource OnSecondaryContainer}"
+                                   VerticalOptions="Center" />
+                            <Label Text="Ce qui sera planifié" FontSize="14" FontAttributes="Bold"
+                                   TextColor="{StaticResource OnSecondaryContainer}"
+                                   VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        <Label Text="{Binding Apercu}" FontSize="12"
+                               TextColor="{StaticResource OnSecondaryContainer}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Erreur serveur -->
+                <Border BackgroundColor="{StaticResource MissedContainer}"
+                        StrokeThickness="0" StrokeShape="RoundRectangle 12"
+                        Padding="14,12" Margin="0,16,0,0"
+                        IsVisible="{Binding ErreurVisible}">
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Text="error" FontFamily="MaterialIcons" FontSize="18"
+                               TextColor="{StaticResource OnMissedContainer}"
+                               VerticalOptions="Center" />
+                        <Label Text="{Binding ErreurMessage}" FontSize="13"
+                               TextColor="{StaticResource OnMissedContainer}"
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+
+                <Button Text="{Binding BoutonTexte}" Style="{StaticResource BtnPrimary}"
+                        IsEnabled="{Binding NonOccupe}"
+                        Margin="0,20,0,0" Clicked="Enregistrer" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

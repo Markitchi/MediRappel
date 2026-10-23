@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Écran 08 · Détail et modification d'un rendez-vous. -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:c="clr-namespace:MediRappel.Controls"
+             x:Class="MediRappel.Pages.DetailRendezVousPage"
+             BackgroundColor="{StaticResource Surface}"
+             Shell.NavBarIsVisible="False">
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
+        <c:BarreSysteme Grid.Row="0" x:Name="barre" />
+
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,*" Padding="12,4,16,6" ColumnSpacing="6">
+            <Label Grid.Column="0" Text="arrow_back" FontFamily="MaterialIcons" FontSize="24"
+                   TextColor="{StaticResource OnSurface}" Padding="8" VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Retour" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Grid.Column="1" Text="Rendez-vous" Style="{StaticResource TitleLarge}"
+                   VerticalOptions="Center" />
+        </Grid>
+
+        <ScrollView Grid.Row="2">
+            <VerticalStackLayout Padding="24,6,24,24" Spacing="0">
+
+                <!-- En-tête -->
+                <Border BackgroundColor="{StaticResource TertiaryContainer}"
+                        StrokeThickness="0" StrokeShape="RoundRectangle 16" Padding="14,14">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                        <Border Grid.Column="0" BackgroundColor="{StaticResource Tertiary}"
+                                StrokeThickness="0" StrokeShape="RoundRectangle 8"
+                                Padding="10,8" VerticalOptions="Center">
+                            <VerticalStackLayout Spacing="0" HorizontalOptions="Center">
+                                <Label Text="{Binding Jour}" FontSize="17" FontAttributes="Bold"
+                                       TextColor="{StaticResource OnTertiary}" HorizontalTextAlignment="Center" />
+                                <Label Text="{Binding Mois}" FontSize="10"
+                                       TextColor="{StaticResource OnTertiary}" HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                            <Label Text="{Binding DateLongue}" FontSize="15" FontAttributes="Bold"
+                                   TextColor="{StaticResource OnTertiaryContainer}" />
+                            <Label Text="{Binding MedecinSpecialite}" FontSize="14"
+                                   TextColor="{StaticResource OnTertiaryContainer}" />
+                            <Label Text="{Binding RappelTexte}" FontSize="12"
+                                   TextColor="{StaticResource OnTertiaryContainer}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- Actions rapides -->
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10" Margin="0,16,0,0">
+                    <Border Grid.Column="0" Style="{StaticResource Chip}" Padding="12,10">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Itineraire" />
+                        </Border.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="7" HorizontalOptions="Center">
+                            <Label Text="directions" FontFamily="MaterialIcons" FontSize="18"
+                                   TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                            <Label Text="Itinéraire" FontSize="13" FontAttributes="Bold"
+                                   TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Border>
+                    <Border Grid.Column="1" Style="{StaticResource Chip}" Padding="12,10">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Appeler" />
+                        </Border.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="7" HorizontalOptions="Center">
+                            <Label Text="call" FontFamily="MaterialIcons" FontSize="18"
+                                   TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                            <Label Text="Appeler" FontSize="13" FontAttributes="Bold"
+                                   TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Border>
+                    <Border Grid.Column="2" Style="{StaticResource Chip}" Padding="12,10">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Partager" />
+                        </Border.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="7" HorizontalOptions="Center">
+                            <Label Text="share" FontFamily="MaterialIcons" FontSize="18"
+                                   TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                            <Label Text="Partager" FontSize="13" FontAttributes="Bold"
+                                   TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Détails -->
+                <Label Text="Lieu" FontSize="12" FontAttributes="Bold"
+                       TextColor="{StaticResource OnSurfaceVariant}" Margin="0,20,0,0" />
+                <Label Text="{Binding Lieu}" FontSize="15" Margin="0,5,0,0" />
+
+                <Label Text="Téléphone" FontSize="12" FontAttributes="Bold"
+                       TextColor="{StaticResource OnSurfaceVariant}" Margin="0,14,0,0" />
+                <Label Text="{Binding Telephone}" FontSize="15" Margin="0,5,0,0" />
+
+                <Label Text="Motif de la consultation" FontSize="12" FontAttributes="Bold"
+                       TextColor="{StaticResource OnSurfaceVariant}" Margin="0,14,0,0" />
+                <Label Text="{Binding Motif}" FontSize="15" Margin="0,5,0,0" />
+
+                <Label Text="Notes personnelles" FontSize="12" FontAttributes="Bold"
+                       TextColor="{StaticResource OnSurfaceVariant}" Margin="0,16,0,0" />
+                <Border Style="{StaticResource Card}" Margin="0,6,0,0" Padding="12,4">
+                    <Editor Text="{Binding Notes, Mode=TwoWay}" AutoSize="TextChanges"
+                            Placeholder="Ajouter une note (documents à apporter, questions…)"
+                            PlaceholderColor="{StaticResource OnSurfaceVariant}"
+                            TextColor="{StaticResource OnSurface}" BackgroundColor="Transparent"
+                            FontSize="14" MinimumHeightRequest="64" />
+                </Border>
+
+                <BoxView Style="{StaticResource Divider}" Margin="0,18" />
+
+                <!-- Rappel -->
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                    <VerticalStackLayout Grid.Column="0" Spacing="3" VerticalOptions="Center">
+                        <Label Text="Me le rappeler" FontSize="15" FontAttributes="Bold" />
+                        <Label Text="La veille du rendez-vous" FontSize="12"
+                               TextColor="{StaticResource OnSurfaceVariant}" />
+                    </VerticalStackLayout>
+                    <Switch Grid.Column="1" VerticalOptions="Center"
+                            IsToggled="{Binding Rappel, Mode=TwoWay}" />
+                </Grid>
+
+                <!-- Agenda -->
+                <Border Style="{StaticResource Card}" Margin="0,14,0,0" Padding="14,13">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="Agenda" />
+                    </Border.GestureRecognizers>
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                        <Label Grid.Column="0" Text="event_available" FontFamily="MaterialIcons"
+                               FontSize="20" TextColor="{StaticResource Primary}"
+                               VerticalOptions="Center" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="3">
+                            <Label Text="Ajouter à mon agenda" FontSize="15" FontAttributes="Bold" />
+                            <Label Text="Export au format iCalendar (.ics)" FontSize="12"
+                                   TextColor="{StaticResource OnSurfaceVariant}" />
+                        </VerticalStackLayout>
+                        <Label Grid.Column="2" Text="chevron_right" FontFamily="MaterialIcons"
+                               FontSize="22" TextColor="{StaticResource OnSurfaceVariant}"
+                               VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+                <Button Text="Enregistrer les modifications" Style="{StaticResource BtnPrimary}"
+                        Margin="0,18,0,0" Clicked="Enregistrer" />
+                <Button Text="Supprimer le rendez-vous" Style="{StaticResource BtnText}"
+                        TextColor="{StaticResource OnMissedContainer}"
+                        Margin="0,4,0,0" Clicked="Supprimer" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <c:BarreNavigation Grid.Row="3" x:Name="nav" ActiveIndex="0" />
+    </Grid>
+</ContentPage>

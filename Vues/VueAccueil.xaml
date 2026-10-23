@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Écran 03 · Accueil — « ai-je pris mon traitement, et qu'ai-je à faire maintenant ? » -->
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MediRappel.Vues.VueAccueil">
+    <ScrollView>
+        <VerticalStackLayout Spacing="0" Padding="0,0,0,110">
+
+            <!-- Titre du jour + accès réglages -->
+            <Grid ColumnDefinitions="*,Auto" Margin="24,14,20,0">
+                <Label Grid.Column="0" Text="{Binding DateTitre}"
+                       FontSize="12" FontAttributes="Bold" CharacterSpacing="1.1"
+                       TextColor="{StaticResource OnSurfaceVariant}"
+                       VerticalOptions="Center" />
+                <Label Grid.Column="1" Text="settings" FontFamily="MaterialIcons"
+                       FontSize="22" TextColor="{StaticResource OnSurfaceVariant}"
+                       Padding="4" VerticalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="VersReglages" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+
+            <!-- Carte de progression du jour (ouvre le détail des prises) -->
+            <Border Style="{StaticResource Card}" Margin="24,10,24,0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="VersPrises" />
+                </Border.GestureRecognizers>
+                <VerticalStackLayout Spacing="0">
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto" ColumnSpacing="12">
+                        <Label Grid.Row="0" Grid.Column="0" Text="{Binding ResumePrises}"
+                               Style="{StaticResource TitleMedium}" />
+                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding ProchainePrise}"
+                               FontSize="13" TextColor="{StaticResource OnSurfaceVariant}"
+                               VerticalOptions="Center" />
+                        <Label Grid.Row="1" Grid.Column="0" Text="{Binding SousTitrePrises}"
+                               FontSize="12" TextColor="{StaticResource OnSurfaceVariant}"
+                               Margin="0,6,0,0" />
+                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding PctTexte}"
+                               FontSize="16" FontAttributes="Bold"
+                               TextColor="{StaticResource Primary}" VerticalOptions="Center" />
+                    </Grid>
+                    <ProgressBar Progress="{Binding PctNorm}" ProgressColor="{StaticResource Primary}"
+                                 BackgroundColor="{StaticResource SurfaceHigh}"
+                                 Margin="0,12,0,0" HeightRequest="8" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Alerte dose manquée -->
+            <Border BackgroundColor="{StaticResource MissedContainer}"
+                    StrokeThickness="0" StrokeShape="RoundRectangle 12"
+                    Padding="14,12" Margin="24,12,24,0"
+                    IsVisible="{Binding AlerteVisible}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Corriger" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                    <Label Grid.Column="0" Text="error" FontFamily="MaterialIcons"
+                           FontSize="18" TextColor="{StaticResource OnMissedContainer}"
+                           VerticalOptions="Center" />
+                    <Label Grid.Column="1" FontSize="13"
+                           TextColor="{StaticResource OnMissedContainer}"
+                           Text="{Binding AlerteTexte}" />
+                    <Label Grid.Column="2" Text="Corriger"
+                           FontSize="13" FontAttributes="Bold"
+                           TextColor="{StaticResource OnMissedContainer}"
+                           TextDecorations="Underline" VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <!-- Prochaines prises -->
+            <Label Text="Prises du jour" Style="{StaticResource TitleLarge}"
+                   Margin="24,20,24,0" />
+
+            <ActivityIndicator IsRunning="{Binding EnChargement}" IsVisible="{Binding EnChargement}"
+                               Color="{StaticResource Primary}" Margin="24,12,24,0"
+                               HorizontalOptions="Start" />
+            <Label Text="Aucune prise prévue aujourd'hui." FontSize="13"
+                   TextColor="{StaticResource OnSurfaceVariant}" Margin="24,12,24,0"
+                   IsVisible="{Binding AucuneDose}" />
+            <Button Text="Ajouter une prise" Style="{StaticResource BtnTonal}"
+                    IsVisible="{Binding AucuneDose}" Margin="24,12,0,0"
+                    HorizontalOptions="Start" Clicked="VersNouvellePrise" />
+
+            <VerticalStackLayout Spacing="8" Margin="24,10,24,0"
+                                 BindableLayout.ItemsSource="{Binding Doses}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource Card}" Padding="14,12">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="DoseTapped" />
+                            </Border.GestureRecognizers>
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                <Label Grid.Column="0" Text="{Binding Heure}"
+                                       FontSize="15" FontAttributes="Bold"
+                                       TextColor="{StaticResource Primary}"
+                                       VerticalOptions="Center" WidthRequest="46" />
+
+                                <VerticalStackLayout Grid.Column="1" Spacing="3">
+                                    <Label Text="{Binding Titre}" FontSize="15" FontAttributes="Bold"
+                                           TextColor="{StaticResource OnSurface}" />
+                                    <Label Text="{Binding Posologie}" FontSize="12"
+                                           TextColor="{StaticResource OnSurfaceVariant}" />
+                                </VerticalStackLayout>
+
+                                <Border Grid.Column="2" VerticalOptions="Center"
+                                        Padding="8,5" StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 8"
+                                        BackgroundColor="{Binding Etat, Converter={StaticResource EtatCouleur}, ConverterParameter=fond}">
+                                    <HorizontalStackLayout Spacing="4">
+                                        <Label FontSize="14"
+                                               TextColor="{Binding Etat, Converter={StaticResource EtatCouleur}}"
+                                               Text="{Binding Etat, Converter={StaticResource EtatIcone}}"
+                                               FontFamily="MaterialIcons" VerticalOptions="Center" />
+                                        <Label Text="{Binding BadgeTexte}"
+                                               FontSize="12" FontAttributes="Bold"
+                                               TextColor="{Binding Etat, Converter={StaticResource EtatCouleur}}"
+                                               VerticalOptions="Center" />
+                                    </HorizontalStackLayout>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <!-- Prochain rendez-vous -->
+            <Label Text="Prochain rendez-vous" Style="{StaticResource TitleLarge}"
+                   Margin="24,22,24,0" IsVisible="{Binding RdvVisible}" />
+            <Border Style="{StaticResource Card}" Margin="24,10,24,0"
+                    BackgroundColor="{StaticResource TertiaryContainer}"
+                    Stroke="Transparent" IsVisible="{Binding RdvVisible}">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="VersRdv" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                    <Border Grid.Column="0" BackgroundColor="{StaticResource Tertiary}"
+                            StrokeThickness="0" StrokeShape="RoundRectangle 8"
+                            Padding="10,8" VerticalOptions="Center" HorizontalOptions="Start">
+                        <VerticalStackLayout Spacing="0" HorizontalOptions="Center">
+                            <Label Text="{Binding RdvJour}" FontSize="17" FontAttributes="Bold"
+                                   TextColor="{StaticResource OnTertiary}"
+                                   HorizontalTextAlignment="Center" />
+                            <Label Text="{Binding RdvMois}" FontSize="10"
+                                   TextColor="{StaticResource OnTertiary}"
+                                   HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                        <Label Text="{Binding RdvLigne1}" FontSize="15" FontAttributes="Bold"
+                               TextColor="{StaticResource OnTertiaryContainer}" />
+                        <Label Text="{Binding RdvSpecialite}" FontSize="13"
+                               TextColor="{StaticResource OnTertiaryContainer}" />
+                        <Label Text="{Binding RdvLieu}" FontSize="12"
+                               TextColor="{StaticResource OnTertiaryContainer}" />
+                    </VerticalStackLayout>
+
+                    <Label Grid.Column="2" Text="{Binding RdvJours}" FontSize="12" FontAttributes="Bold"
+                           TextColor="{StaticResource Tertiary}" VerticalOptions="Center" />
+                </Grid>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentView>

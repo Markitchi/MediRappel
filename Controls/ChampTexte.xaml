@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Champ texte outlined Material 3, label flottant, message d'erreur lié (aria-describedby). -->
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MediRappel.Controls.ChampTexte"
+             x:Name="racine">
+    <VerticalStackLayout Spacing="4">
+        <Grid x:Name="zone">
+            <!-- Label flottant posé sur le trait supérieur -->
+            <Label x:Name="label"
+                   Text="{Binding Source={x:Reference racine}, Path=Libelle}"
+                   FontSize="12"
+                   TextColor="{StaticResource OnSurfaceVariant}"
+                   BackgroundColor="{StaticResource Surface}"
+                   Padding="5,0"
+                   Margin="12,0,0,0"
+                   VerticalOptions="Start"
+                   IsVisible="{Binding Source={x:Reference racine}, Path=LibelleVisible}" />
+            <Border x:Name="boite"
+                    BackgroundColor="{StaticResource Surface}"
+                    Stroke="{StaticResource Outline}"
+                    StrokeThickness="1.5"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="14,0"
+                    HeightRequest="56">
+                <Grid ColumnDefinitions="*,Auto" >
+                    <Entry x:Name="saisie"
+                           Grid.Column="0"
+                           Text="{Binding Source={x:Reference racine}, Path=Valeur, Mode=TwoWay}"
+                           Placeholder="{Binding Source={x:Reference racine}, Path=Indice}"
+                           PlaceholderColor="{StaticResource OnSurfaceVariant}"
+                           TextColor="{StaticResource OnSurface}"
+                           FontSize="16"
+                           BackgroundColor="Transparent"
+                           HeightRequest="54"
+                           VerticalOptions="Center"
+                           IsPassword="{Binding Source={x:Reference racine}, Path=MotDePasse}" />
+                    <Label Grid.Column="1"
+                           x:Name="oeil"
+                           Text="{Binding Source={x:Reference racine}, Path=IconeDroite}"
+                           FontFamily="MaterialIcons" FontSize="20"
+                           TextColor="{StaticResource OnSurfaceVariant}"
+                           IsVisible="{Binding Source={x:Reference racine}, Path=OeilVisible}"
+                           VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="BasculerMdp" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Message d'erreur : lié visuellement + teinté, jamais la couleur seule -->
+        <HorizontalStackLayout x:Name="err" Spacing="6"
+                               IsVisible="{Binding Source={x:Reference racine}, Path=ErreurVisible}"
+                               Margin="12,0,0,0">
+            <Label Text="error" FontFamily="MaterialIcons" FontSize="15"
+                   TextColor="{StaticResource Error}" VerticalOptions="Center" />
+            <Label Text="{Binding Source={x:Reference racine}, Path=Erreur}"
+                   FontSize="12" TextColor="{StaticResource Error}"
+                   VerticalOptions="Center" />
+        </HorizontalStackLayout>
+
+        <Label Text="{Binding Source={x:Reference racine}, Path=Aide}"
+               FontSize="12"
+               IsVisible="{Binding Source={x:Reference racine}, Path=AideVisible}"
+               TextColor="{StaticResource OnSurfaceVariant}"
+               Margin="12,2,0,0" />
+    </VerticalStackLayout>
+</ContentView>

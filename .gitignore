@@ -1,0 +1,17 @@
+## .NET / MAUI
+bin/
+obj/
+*.user
+*.binlog
+
+## VS Code (garder la config, ignorer l'état local)
+.vscode/*.local.json
+
+## Android
+*.apk
+*.aab
+*.keystore
+
+## OS
+.DS_Store
+Thumbs.db
