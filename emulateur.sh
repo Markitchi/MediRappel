@@ -24,7 +24,7 @@ APP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../MediRappel/App" && pwd)"
 # Réglages de performance (machine cible : 4 cœurs / 8 threads, 30 Go de RAM,
 # GPU Intel UHD 630). « gpu host » délègue le rendu au GPU de la machine au lieu
 # de le simuler en logiciel : c'est ce qui supprime la lenteur de l'émulateur.
-EMU_FLAGS=(-gpu host -memory 4096 -cores 4
+EMU_FLAGS=(-gpu host -memory 8192 -cores 8
            -no-snapshot-load -no-snapshot-save
            -no-boot-anim -netdelay none -netspeed full)
 EMU_SER="emulator-5554"
