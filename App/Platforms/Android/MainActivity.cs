@@ -20,5 +20,12 @@ public class MainActivity : MauiAppCompatActivity
         Window?.SetStatusBarColor(Android.Graphics.Color.ParseColor("#00696D"));
         Window?.SetNavigationBarColor(Android.Graphics.Color.ParseColor("#00696D"));
         Window?.AddFlags(WindowManagerFlags.DrawsSystemBarBackgrounds);
+        Window?.ClearFlags(WindowManagerFlags.TranslucentStatus | WindowManagerFlags.TranslucentNavigation);
+
+        // Icônes claires (blanches) sur le fond sombre #00696D de la charte,
+        // pour que batterie, réseau et notifications restent lisibles.
+        var uiFlags = (int)Window.DecorView.SystemUiVisibility;
+        uiFlags &= ~(int)Android.Views.SystemUiFlags.LightStatusBar;
+        Window.DecorView.SystemUiVisibility = (Android.Views.StatusBarVisibility)uiFlags;
     }
 }
