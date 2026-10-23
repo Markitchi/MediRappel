@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Écran 02 · Inscription — création d'un compte réel (e-mail + mot de passe). -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:c="clr-namespace:MediRappel.Controls"
+             x:Class="MediRappel.Pages.InscriptionPage"
+             BackgroundColor="{StaticResource Surface}"
+             Shell.NavBarIsVisible="False">
+    <ScrollView>
+        <VerticalStackLayout Padding="0,0,0,28" Spacing="0">
+            <c:BarreSysteme x:Name="barre" />
+
+            <VerticalStackLayout Padding="24,8,24,0" Spacing="0">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
+                    <Label Grid.Column="0" Text="arrow_back" FontFamily="MaterialIcons" FontSize="24"
+                           TextColor="{StaticResource OnSurface}" Padding="4,0,8,0"
+                           VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Retour" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Grid.Column="1" Text="Créer un compte" Style="{StaticResource HeadlineMedium}"
+                           VerticalOptions="Center" />
+                </Grid>
+
+                <Label Style="{StaticResource BodyMedium}"
+                       TextColor="{StaticResource OnSurfaceVariant}"
+                       Margin="0,8,0,0"
+                       Text="Votre dossier vous suit sur tous vos appareils, protégé par votre mot de passe." />
+
+                <VerticalStackLayout Spacing="18" Margin="0,22,0,0">
+                    <c:ChampTexte Libelle="Nom et prénom"
+                                  Valeur="{Binding Nom, Mode=TwoWay}"
+                                  Indice="Marie Dupont"
+                                  OeilVisible="False"
+                                  Erreur="Indiquez votre nom complet."
+                                  ErreurVisible="{Binding NomErreur}" />
+
+                    <c:ChampTexte Libelle="Adresse e-mail"
+                                  Valeur="{Binding Email, Mode=TwoWay}"
+                                  Indice="vous@exemple.fr"
+                                  CleClavier="Email" OeilVisible="False"
+                                  Erreur="Adresse e-mail invalide."
+                                  ErreurVisible="{Binding EmailErreur}" />
+
+                    <c:ChampTexte Libelle="Mot de passe"
+                                  Valeur="{Binding Mdp, Mode=TwoWay}"
+                                  Indice="••••••••"
+                                  MotDePasse="True"
+                                  OeilVisible="True"
+                                  Aide="8 caractères minimum."
+                                  AideVisible="True"
+                                  Erreur="8 caractères minimum."
+                                  ErreurVisible="{Binding MdpErreur}" />
+
+                    <c:ChampTexte Libelle="Confirmer le mot de passe"
+                                  Valeur="{Binding Confirmation, Mode=TwoWay}"
+                                  Indice="••••••••"
+                                  MotDePasse="True"
+                                  OeilVisible="True"
+                                  Erreur="Les deux mots de passe ne correspondent pas."
+                                  ErreurVisible="{Binding ConfErreur}" />
+                </VerticalStackLayout>
+
+                <!-- Consentement -->
+                <Grid ColumnDefinitions="Auto,*" Margin="0,20,0,0" ColumnSpacing="10">
+                    <CheckBox Grid.Column="0"
+                              IsChecked="{Binding Accorde, Mode=TwoWay}"
+                              Color="{StaticResource Primary}"
+                              VerticalOptions="Start" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="4">
+                        <Label FontSize="14" LineHeight="1.4"
+                               TextColor="{StaticResource OnSurface}"
+                               Text="J'accepte les conditions d'utilisation et la politique de confidentialité." />
+                        <Label FontSize="12"
+                               TextColor="{StaticResource OnSurfaceVariant}"
+                               Text="Vos données sont rattachées à votre compte et protégées par mot de passe." />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Message d'erreur serveur -->
+                <Border BackgroundColor="{StaticResource MissedContainer}"
+                        StrokeThickness="0" StrokeShape="RoundRectangle 12"
+                        Padding="14,12" Margin="0,16,0,0"
+                        IsVisible="{Binding ErreurVisible}">
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Text="error" FontFamily="MaterialIcons" FontSize="18"
+                               TextColor="{StaticResource OnMissedContainer}"
+                               VerticalOptions="Center" />
+                        <Label Text="{Binding ErreurMessage}" FontSize="13"
+                               TextColor="{StaticResource OnMissedContainer}"
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+
+                <Button Text="{Binding BoutonTexte}"
+                        Style="{StaticResource BtnPrimary}"
+                        IsEnabled="{Binding NonOccupe}"
+                        Margin="0,24,0,0"
+                        Clicked="CreerCompte" />
+
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="5" Margin="0,16,0,0">
+                    <Label Text="J'ai déjà un compte ?" Style="{StaticResource BodyMedium}"
+                           TextColor="{StaticResource OnSurfaceVariant}" />
+                    <Label Text="Se connecter" FontSize="14" FontAttributes="Bold"
+                           TextColor="{StaticResource Primary}">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="VersConnexion" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

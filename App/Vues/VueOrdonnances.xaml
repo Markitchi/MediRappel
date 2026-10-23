@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Écran 04 · Archivage des ordonnances — recherche par médicament ou médecin, filtres en chips. -->
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MediRappel.Vues.VueOrdonnances">
+    <ScrollView>
+        <VerticalStackLayout Spacing="0" Padding="0,0,0,110">
+
+            <Label Text="Ordonnances" Style="{StaticResource HeadlineMedium}"
+                   Margin="24,14,24,0" />
+
+            <!-- Champ de recherche à icône -->
+            <Border Style="{StaticResource Field}" Margin="24,14,24,0" HeightRequest="52">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                    <Label Grid.Column="0" Text="search" FontFamily="MaterialIcons"
+                           FontSize="20" TextColor="{StaticResource OnSurfaceVariant}"
+                           VerticalOptions="Center" />
+                    <Entry Grid.Column="1" Text="{Binding Recherche, Mode=TwoWay}"
+                           TextChanged="RechercheChangee"
+                           Placeholder="Rechercher un médecin, un médicament…"
+                           PlaceholderColor="{StaticResource OnSurfaceVariant}"
+                           TextColor="{StaticResource OnSurface}"
+                           BackgroundColor="Transparent" FontSize="15"
+                           HeightRequest="50" VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <!-- Filtres en chips avec compteur -->
+            <HorizontalStackLayout Spacing="8" Margin="24,14,24,0">
+                <Border Style="{StaticResource Chip}" StrokeThickness="0"
+                        BackgroundColor="{Binding FiltreToutes, Converter={StaticResource SelFond}}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="FiltreToutesTapped" />
+                    </Border.GestureRecognizers>
+                    <Label Text="{Binding LabelToutes}" FontSize="14" FontAttributes="Bold"
+                           TextColor="{Binding FiltreToutes, Converter={StaticResource SelTexte}}"
+                           VerticalOptions="Center" />
+                </Border>
+                <Border Style="{StaticResource Chip}" StrokeThickness="0"
+                        BackgroundColor="{Binding FiltreActives, Converter={StaticResource SelFond}}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="FiltreActivesTapped" />
+                    </Border.GestureRecognizers>
+                    <Label Text="{Binding LabelActives}" FontSize="14" FontAttributes="Bold"
+                           TextColor="{Binding FiltreActives, Converter={StaticResource SelTexte}}"
+                           VerticalOptions="Center" />
+                </Border>
+                <Border Style="{StaticResource Chip}" StrokeThickness="0"
+                        BackgroundColor="{Binding FiltreTerminees, Converter={StaticResource SelFond}}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="FiltreTermineesTapped" />
+                    </Border.GestureRecognizers>
+                    <Label Text="{Binding LabelTerminees}" FontSize="14" FontAttributes="Bold"
+                           TextColor="{Binding FiltreTerminees, Converter={StaticResource SelTexte}}"
+                           VerticalOptions="Center" />
+                </Border>
+            </HorizontalStackLayout>
+
+            <!-- Liste des ordonnances -->
+            <VerticalStackLayout Spacing="10" Margin="24,16,24,0"
+                                 BindableLayout.ItemsSource="{Binding Liste}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource Card}" Padding="14,13">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Ouvrir" />
+                            </Border.GestureRecognizers>
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="8">
+                                <Label Grid.Row="0" Grid.Column="0"
+                                       Text="{Binding Medecin}"
+                                       FontSize="15" FontAttributes="Bold"
+                                       TextColor="{StaticResource OnSurface}" />
+                                <Label Grid.Row="0" Grid.Column="1"
+                                       Text="{Binding Statut}"
+                                       FontSize="11" FontAttributes="Bold"
+                                       TextColor="{Binding Statut, Converter={StaticResource StatutTexte}}"
+                                       BackgroundColor="{Binding Statut, Converter={StaticResource StatutFond}}"
+                                       Padding="8,4"
+                                       VerticalOptions="Center" />
+
+                                <Label Grid.Row="1" Grid.Column="0"
+                                       Text="{Binding Specialite}" FontSize="13"
+                                       TextColor="{StaticResource OnSurfaceVariant}"
+                                       Margin="0,3,0,0" />
+
+                                <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                       Text="{Binding Resume}" FontSize="12"
+                                       TextColor="{StaticResource OnSurfaceVariant}"
+                                       Margin="0,7,0,0" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <!-- État vide -->
+            <VerticalStackLayout Spacing="6" HorizontalOptions="Center" Margin="24,30,24,0"
+                                 IsVisible="{Binding VideVisible}">
+                <Label Text="description" FontFamily="MaterialIcons" FontSize="30"
+                       TextColor="{StaticResource OnSurfaceVariant}" HorizontalOptions="Center" />
+                <Label Text="Aucune ordonnance" Style="{StaticResource TitleSmall}"
+                       HorizontalTextAlignment="Center" />
+                <Label Text="Ajoutez une ordonnance avec le bouton ci-dessous."
+                       FontSize="12" TextColor="{StaticResource OnSurfaceVariant}"
+                       HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentView>

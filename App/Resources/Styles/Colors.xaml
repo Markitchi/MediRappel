@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!-- MediRappel — charte M3 (teal sante). Paires verifiees WCAG 2.1 AA (tools/contraste.py) -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:sc="clr-namespace:System.Collections.ObjectModel;assembly=netstandard">
+
+    <!-- Couleurs de marque -->
+    <Color x:Key="Primary">#00696D</Color>
+    <Color x:Key="OnPrimary">#FFFFFF</Color>
+    <Color x:Key="PrimaryContainer">#9CF1F5</Color>
+    <Color x:Key="OnPrimaryContainer">#002021</Color>
+
+    <Color x:Key="Secondary">#4A6365</Color>
+    <Color x:Key="OnSecondary">#FFFFFF</Color>
+    <Color x:Key="SecondaryContainer">#CCE8E9</Color>
+    <Color x:Key="OnSecondaryContainer">#051F21</Color>
+
+    <!-- Tertiaire : rendez-vous -->
+    <Color x:Key="Tertiary">#4B607C</Color>
+    <Color x:Key="OnTertiary">#FFFFFF</Color>
+    <Color x:Key="TertiaryContainer">#D3E4FF</Color>
+    <Color x:Key="OnTertiaryContainer">#041C35</Color>
+
+    <Color x:Key="Error">#BA1A1A</Color>
+    <Color x:Key="OnError">#FFFFFF</Color>
+    <Color x:Key="ErrorContainer">#FFDAD6</Color>
+    <Color x:Key="OnErrorContainer">#410002</Color>
+
+    <!-- Surfaces & texte -->
+    <Color x:Key="Surface">#F4FAFA</Color>
+    <Color x:Key="OnSurface">#191C1C</Color>
+    <Color x:Key="SurfaceLow">#EFF5F5</Color>
+    <Color x:Key="SurfaceContainer">#E9EFEF</Color>
+    <Color x:Key="SurfaceHigh">#E3E9E9</Color>
+    <Color x:Key="OnSurfaceVariant">#3F4849</Color>
+    <Color x:Key="Outline">#6F797A</Color>
+    <Color x:Key="OutlineVariant">#BEC8C9</Color>
+    <Color x:Key="SurfaceVariant">#DAE4E5</Color>
+
+    <!-- Etats des composants -->
+    <Color x:Key="DisabledOn">#7C8586</Color>
+    <Color x:Key="DisabledBg">#E3E9E9</Color>
+
+    <!-- Semantique metier : couleur + texte + icone (jamais la couleur seule) -->
+    <Color x:Key="OkContainer">#D7F5E1</Color>
+    <Color x:Key="OnOkContainer">#12402A</Color>
+    <Color x:Key="DueContainer">#FFDF9E</Color>
+    <Color x:Key="OnDueContainer">#5A3D00</Color>
+    <Color x:Key="MissedContainer">#FFDAD6</Color>
+    <Color x:Key="OnMissedContainer">#410002</Color>
+    <Color x:Key="OfflineBg">#E1F0F0</Color>
+    <Color x:Key="OfflineOn">#191C1C</Color>
+
+    <!-- Histogramme d'observance : semaine partielle (ambre soutenu, contraste >= 3:1 sur carte) -->
+    <Color x:Key="BarrePartielle">#9A6400</Color>
+
+    <!-- Suivi des branches sur la charte Figma / maquettes -->
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}" />
+    <SolidColorBrush x:Key="OnPrimaryBrush" Color="{StaticResource OnPrimary}" />
+    <SolidColorBrush x:Key="PrimaryContainerBrush" Color="{StaticResource PrimaryContainer}" />
+    <SolidColorBrush x:Key="OnPrimaryContainerBrush" Color="{StaticResource OnPrimaryContainer}" />
+    <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource Surface}" />
+    <SolidColorBrush x:Key="SurfaceContainerBrush" Color="{StaticResource SurfaceContainer}" />
+    <SolidColorBrush x:Key="SurfaceHighBrush" Color="{StaticResource SurfaceHigh}" />
+    <SolidColorBrush x:Key="SurfaceLowBrush" Color="{StaticResource SurfaceLow}" />
+    <SolidColorBrush x:Key="OnSurfaceBrush" Color="{StaticResource OnSurface}" />
+    <SolidColorBrush x:Key="OnSurfaceVariantBrush" Color="{StaticResource OnSurfaceVariant}" />
+    <SolidColorBrush x:Key="OutlineBrush" Color="{StaticResource Outline}" />
+    <SolidColorBrush x:Key="OutlineVariantBrush" Color="{StaticResource OutlineVariant}" />
+    <SolidColorBrush x:Key="SecondaryContainerBrush" Color="{StaticResource SecondaryContainer}" />
+    <SolidColorBrush x:Key="OnSecondaryContainerBrush" Color="{StaticResource OnSecondaryContainer}" />
+    <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}" />
+    <SolidColorBrush x:Key="TertiaryContainerBrush" Color="{StaticResource TertiaryContainer}" />
+    <SolidColorBrush x:Key="OnTertiaryContainerBrush" Color="{StaticResource OnTertiaryContainer}" />
+    <SolidColorBrush x:Key="ErrorContainerBrush" Color="{StaticResource ErrorContainer}" />
+    <SolidColorBrush x:Key="OnErrorContainerBrush" Color="{StaticResource OnErrorContainer}" />
+    <SolidColorBrush x:Key="OkContainerBrush" Color="{StaticResource OkContainer}" />
+    <SolidColorBrush x:Key="OnOkContainerBrush" Color="{StaticResource OnOkContainer}" />
+    <SolidColorBrush x:Key="DueContainerBrush" Color="{StaticResource DueContainer}" />
+    <SolidColorBrush x:Key="OnDueContainerBrush" Color="{StaticResource OnDueContainer}" />
+    <SolidColorBrush x:Key="MissedContainerBrush" Color="{StaticResource MissedContainer}" />
+    <SolidColorBrush x:Key="OnMissedContainerBrush" Color="{StaticResource OnMissedContainer}" />
+    <SolidColorBrush x:Key="OfflineBgBrush" Color="{StaticResource OfflineBg}" />
+    <SolidColorBrush x:Key="OfflineOnBrush" Color="{StaticResource OfflineOn}" />
+
+</ResourceDictionary>

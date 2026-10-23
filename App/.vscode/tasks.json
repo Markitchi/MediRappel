@@ -1,0 +1,85 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "MediRappel · Restaurer",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["restore", "MediRappel.slnx"],
+      "problemMatcher": "$msCompile",
+      "group": "build"
+    },
+    {
+      "label": "MediRappel · Compiler (Android)",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["build", "MediRappel.csproj", "-f", "net10.0-android", "-c", "Debug"],
+      "options": {
+        "env": {
+          "ANDROID_HOME": "${env:HOME}/android-sdk",
+          "ANDROID_SDK_ROOT": "${env:HOME}/android-sdk",
+          "JAVA_HOME": "${env:HOME}/.jdk",
+          "PATH": "${env:HOME}/.jdk/bin:${env:HOME}/android-sdk/platform-tools:${env:HOME}/android-sdk/emulator:${env:PATH}"
+        }
+      },
+      "problemMatcher": "$msCompile",
+      "group": { "kind": "build", "isDefault": true }
+    },
+    {
+      "label": "MediRappel · Créer l'émulateur (AVD)",
+      "type": "shell",
+      "command": "bash",
+      "args": ["${workspaceFolder}/../../tools/emulateur.sh", "--creer"],
+      "options": {
+        "env": {
+          "ANDROID_HOME": "${env:HOME}/android-sdk",
+          "ANDROID_SDK_ROOT": "${env:HOME}/android-sdk",
+          "JAVA_HOME": "${env:HOME}/.jdk",
+          "PATH": "${env:HOME}/.jdk/bin:${env:HOME}/android-sdk/platform-tools:${env:HOME}/android-sdk/emulator:${env:HOME}/android-sdk/cmdline-tools/latest/bin:${env:PATH}"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "MediRappel · Démarrer l'émulateur",
+      "type": "shell",
+      "command": "bash",
+      "args": ["${workspaceFolder}/../../tools/emulateur.sh", "--demarrer"],
+      "options": {
+        "env": {
+          "ANDROID_HOME": "${env:HOME}/android-sdk",
+          "ANDROID_SDK_ROOT": "${env:HOME}/android-sdk",
+          "JAVA_HOME": "${env:HOME}/.jdk",
+          "PATH": "${env:HOME}/.jdk/bin:${env:HOME}/android-sdk/platform-tools:${env:HOME}/android-sdk/emulator:${env:HOME}/android-sdk/cmdline-tools/latest/bin:${env:PATH}"
+        }
+      },
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "MediRappel · Déployer sur l'émulateur",
+      "type": "shell",
+      "command": "dotnet",
+      "args": ["build", "MediRappel.csproj", "-t:Run", "-f", "net10.0-android", "-c", "Debug"],
+      "options": {
+        "env": {
+          "ANDROID_HOME": "${env:HOME}/android-sdk",
+          "ANDROID_SDK_ROOT": "${env:HOME}/android-sdk",
+          "JAVA_HOME": "${env:HOME}/.jdk",
+          "PATH": "${env:HOME}/.jdk/bin:${env:HOME}/android-sdk/platform-tools:${env:HOME}/android-sdk/emulator:${env:PATH}"
+        }
+      },
+      "dependsOn": "MediRappel · Compiler (Android)",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "MediRappel · Lancer (émulateur + app)",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "MediRappel · Démarrer l'émulateur",
+        "MediRappel · Déployer sur l'émulateur"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}

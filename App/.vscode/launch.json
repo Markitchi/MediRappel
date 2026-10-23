@@ -1,0 +1,22 @@
+{
+  // Lancement de l'app sur l'émulateur Android via l'extension « .NET MAUI »
+  // (ms-dotnettools.dotnet-maui). Choisir « MediRappel (Android) » puis F5.
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "MediRappel (Android)",
+      "type": "maui",
+      "request": "launch",
+      "project": "${workspaceFolder}/MediRappel.csproj",
+      "platform": "Android",
+      "preLaunchTask": "MediRappel · Compiler (Android)"
+    },
+    {
+      "name": "MediRappel · Attacher au processus",
+      "type": "maui",
+      "request": "attach",
+      "project": "${workspaceFolder}/MediRappel.csproj",
+      "platform": "Android"
+    }
+  ]
+}

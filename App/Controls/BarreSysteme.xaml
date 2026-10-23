@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Barre d'état système : réseau/hors-ligne. L'heure et les icônes système sont gérées par le système. -->
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MediRappel.Controls.BarreSysteme"
+             x:Name="racine">
+
+    <Grid Padding="16,6,16,4"
+          ColumnDefinitions="*,Auto"
+          BackgroundColor="Transparent">
+
+        <!-- Marque : affichée quand hors ligne uniquement -->
+        <Label Grid.Column="1"
+               Text="{Binding Source={x:Reference racine}, Path=Accent}"
+               FontSize="11" FontAttributes="Bold"
+               CharacterSpacing="1.2"
+               IsVisible="{Binding Source={x:Reference racine}, Path=HorsLigne}"
+               TextColor="{StaticResource OnSurface}"
+               BackgroundColor="{StaticResource OfflineBg}"
+               Padding="8,3"
+               VerticalOptions="Center" />
+    </Grid>
+</ContentView>

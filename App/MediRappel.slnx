@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../../MediRappel.Api/MediRappel.Api.csproj" />
+  <Project Path="MediRappel.csproj" />
+</Solution>

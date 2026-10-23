@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Écran 06 · Mes prises et rappels — calendrier de la semaine + réglage des rappels. -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:c="clr-namespace:MediRappel.Controls"
+             x:Class="MediRappel.Pages.MesPrisesPage"
+             BackgroundColor="{StaticResource Surface}"
+             Shell.NavBarIsVisible="False">
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
+        <c:BarreSysteme Grid.Row="0" x:Name="barre" />
+
+        <!-- En-tête -->
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,*" Padding="12,4,16,6" ColumnSpacing="6">
+            <Label Grid.Column="0" Text="arrow_back" FontFamily="MaterialIcons" FontSize="24"
+                   TextColor="{StaticResource OnSurface}" Padding="8" VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Retour" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Grid.Column="1" Text="Mes prises" Style="{StaticResource TitleLarge}"
+                   VerticalOptions="Center" />
+        </Grid>
+
+        <ScrollView Grid.Row="2">
+            <VerticalStackLayout Padding="0,4,0,96" Spacing="0">
+
+                <!-- Sélecteur de semaine -->
+                <FlexLayout Margin="20,8,20,0" Direction="Row"
+                            JustifyContent="SpaceBetween" AlignItems="Center"
+                            BindableLayout.ItemsSource="{Binding Jours}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Border StrokeThickness="0" StrokeShape="RoundRectangle 12"
+                                    Padding="9,6"
+                                    BackgroundColor="{Binding Selectionne, Converter={StaticResource SelFond}}">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="JourTape" />
+                                </Border.GestureRecognizers>
+                                <VerticalStackLayout Spacing="2">
+                                    <Label Text="{Binding Libelle}" FontSize="10" FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           TextColor="{Binding Selectionne, Converter={StaticResource SelTexte}}" />
+                                    <Label Text="{Binding Numero}" FontSize="15" FontAttributes="Bold"
+                                           HorizontalTextAlignment="Center"
+                                           TextColor="{Binding Selectionne, Converter={StaticResource SelTexte}}" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+
+                <!-- Rappel du traitement -->
+                <Border Style="{StaticResource Card}" Margin="24,16,24,0"
+                        BackgroundColor="{StaticResource PrimaryContainer}" Stroke="Transparent">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding TraitementTitre}" FontSize="16" FontAttributes="Bold"
+                               TextColor="{StaticResource OnPrimaryContainer}" />
+                        <Label Text="{Binding TraitementDetail}" FontSize="13"
+                               TextColor="{StaticResource OnPrimaryContainer}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Label Text="{Binding TitreJour}" Style="{StaticResource TitleLarge}"
+                       Margin="24,20,24,0" />
+
+                <!-- Liste des prises du jour -->
+                <VerticalStackLayout Spacing="8" Margin="24,10,24,0"
+                                     BindableLayout.ItemsSource="{Binding Doses}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource Card}" Padding="14,12">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="DoseTapee" />
+                                </Border.GestureRecognizers>
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                                    <Label Grid.Column="0" Text="{Binding Heure}"
+                                           FontSize="15" FontAttributes="Bold"
+                                           TextColor="{StaticResource Primary}"
+                                           WidthRequest="46" VerticalOptions="Center" />
+                                    <VerticalStackLayout Grid.Column="1" Spacing="3">
+                                        <Label Text="{Binding Titre}" FontSize="15" FontAttributes="Bold" />
+                                        <Label Text="{Binding Posologie}" FontSize="12"
+                                               TextColor="{StaticResource OnSurfaceVariant}" />
+                                    </VerticalStackLayout>
+                                    <Border Grid.Column="2" VerticalOptions="Center"
+                                            Padding="8,5" StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 8"
+                                            BackgroundColor="{Binding Etat, Converter={StaticResource EtatCouleur}, ConverterParameter=fond}">
+                                        <HorizontalStackLayout Spacing="4">
+                                            <Label FontFamily="MaterialIcons" FontSize="14"
+                                                   VerticalOptions="Center"
+                                                   Text="{Binding Etat, Converter={StaticResource EtatIcone}}"
+                                                   TextColor="{Binding Etat, Converter={StaticResource EtatCouleur}}" />
+                                            <Label Text="{Binding BadgeTexte}" FontSize="12" FontAttributes="Bold"
+                                                   VerticalOptions="Center"
+                                                   TextColor="{Binding Etat, Converter={StaticResource EtatCouleur}}" />
+                                        </HorizontalStackLayout>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <Label Text="Aucune prise planifiée ce jour." FontSize="13"
+                       TextColor="{StaticResource OnSurfaceVariant}" Margin="24,12,24,0"
+                       IsVisible="{Binding AucuneDose}" />
+
+                <!-- Rappels -->
+                <Label Text="Rappels" Style="{StaticResource TitleLarge}" Margin="24,22,24,0" />
+                <VerticalStackLayout Spacing="8" Margin="24,10,24,0">
+                    <Border Style="{StaticResource Card}" Padding="14,13">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                            <VerticalStackLayout Grid.Column="0" Spacing="3">
+                                <Label Text="Notifications de rappel" FontSize="15" FontAttributes="Bold" />
+                                <Label Text="Recevoir une notification à chaque prise"
+                                       FontSize="12" TextColor="{StaticResource OnSurfaceVariant}" />
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="1" VerticalOptions="Center"
+                                    IsToggled="{Binding RappelsActifs, Mode=TwoWay}"
+                                    Toggled="RappelsToggles" />
+                        </Grid>
+                    </Border>
+
+                    <Border Style="{StaticResource Card}" Padding="14,13">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="PlageTapee" />
+                        </Border.GestureRecognizers>
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                            <VerticalStackLayout Grid.Column="0" Spacing="3">
+                                <Label Text="Plage de silence" FontSize="15" FontAttributes="Bold" />
+                                <Label Text="{Binding PlageSilence}" FontSize="12"
+                                       TextColor="{StaticResource OnSurfaceVariant}" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="1" Text="chevron_right" FontFamily="MaterialIcons"
+                                   FontSize="22" TextColor="{StaticResource OnSurfaceVariant}"
+                                   VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Écoconception -->
+                <Border Style="{StaticResource CardFlat}" Margin="24,14,24,0"
+                        BackgroundColor="{StaticResource SecondaryContainer}">
+                    <VerticalStackLayout Spacing="6">
+                        <HorizontalStackLayout Spacing="7">
+                            <Label Text="battery_saver" FontFamily="MaterialIcons" FontSize="18"
+                                   TextColor="{StaticResource OnSecondaryContainer}"
+                                   VerticalOptions="Center" />
+                            <Label Text="Économie de batterie" FontSize="14" FontAttributes="Bold"
+                                   TextColor="{StaticResource OnSecondaryContainer}"
+                                   VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        <Label FontSize="12" TextColor="{StaticResource OnSecondaryContainer}"
+                               Text="Les rappels sont regroupés par créneau horaire : l'application réveille l'écran moins souvent, la batterie dure plus longtemps." />
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Ajout d'une prise -->
+        <c:Fab Grid.Row="2" x:Name="fabAjout" Libelle="Ajouter une prise" Icone="add"
+               HorizontalOptions="End" VerticalOptions="End" Margin="0,0,16,14" />
+
+        <c:BarreNavigation Grid.Row="3" x:Name="nav" ActiveIndex="0" />
+    </Grid>
+</ContentPage>

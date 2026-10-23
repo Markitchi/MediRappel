@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Écran 05 · Détail ordonnance et partage — partage réel avec le médecin. -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:c="clr-namespace:MediRappel.Controls"
+             x:Class="MediRappel.Pages.DetailOrdonnancePage"
+             BackgroundColor="{StaticResource Surface}"
+             Shell.NavBarIsVisible="False">
+    <Grid RowDefinitions="Auto,Auto,*">
+        <c:BarreSysteme Grid.Row="0" x:Name="barre" />
+
+        <!-- En-tête avec retour -->
+        <Grid Grid.Row="1" ColumnDefinitions="Auto,*,Auto" Padding="12,4,16,6"
+              ColumnSpacing="6">
+            <Label Grid.Column="0" Text="arrow_back" FontFamily="MaterialIcons" FontSize="24"
+                   TextColor="{StaticResource OnSurface}" Padding="8" VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Retour" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Grid.Column="1" Text="Ordonnance" Style="{StaticResource TitleLarge}"
+                   VerticalOptions="Center" />
+            <Label Grid.Column="2" Text="more_vert" FontFamily="MaterialIcons" FontSize="24"
+                   TextColor="{StaticResource OnSurface}" Padding="8" VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Menu" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+
+        <ScrollView Grid.Row="2">
+            <VerticalStackLayout Padding="24,6,24,24" Spacing="0">
+
+                <!-- En-tête praticien -->
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                    <VerticalStackLayout Grid.Column="0" Spacing="0">
+                        <Label Text="{Binding Medecin}" Style="{StaticResource HeadlineSmall}" />
+                        <Label Text="{Binding SousTitre}" FontSize="13"
+                               TextColor="{StaticResource OnSurfaceVariant}" Margin="0,4,0,0" />
+                    </VerticalStackLayout>
+                    <Border Grid.Column="1" VerticalOptions="Start" Padding="10,5"
+                            StrokeThickness="0" StrokeShape="RoundRectangle 8"
+                            BackgroundColor="{Binding Statut, Converter={StaticResource StatutFond}}">
+                        <Label Text="{Binding Statut}" FontSize="12" FontAttributes="Bold"
+                               TextColor="{Binding Statut, Converter={StaticResource StatutTexte}}" />
+                    </Border>
+                </Grid>
+
+                <!-- Métadonnées -->
+                <Grid ColumnDefinitions="*,*" Margin="0,14,0,0" ColumnSpacing="10">
+                    <VerticalStackLayout Grid.Column="0" Spacing="3">
+                        <Label Text="Délivrée le" FontSize="12" FontAttributes="Bold"
+                               TextColor="{StaticResource OnSurfaceVariant}" />
+                        <Label Text="{Binding DateTexte}" FontSize="14" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1" Spacing="3">
+                        <Label Text="Médicaments" FontSize="12" FontAttributes="Bold"
+                               TextColor="{StaticResource OnSurfaceVariant}" />
+                        <Label Text="{Binding NbMedicamentsTexte}" FontSize="14" />
+                    </VerticalStackLayout>
+                </Grid>
+                <VerticalStackLayout Spacing="3" Margin="0,14,0,0">
+                    <Label Text="Durée du traitement" FontSize="12" FontAttributes="Bold"
+                           TextColor="{StaticResource OnSurfaceVariant}" />
+                    <Label Text="{Binding Periode}" FontSize="14" />
+                </VerticalStackLayout>
+
+                <BoxView Style="{StaticResource Divider}" Margin="0,16" />
+
+                <!-- Médicaments prescrits -->
+                <Label Text="Médicaments prescrits" Style="{StaticResource TitleLarge}" />
+                <VerticalStackLayout Spacing="8" Margin="0,12,0,0"
+                                     BindableLayout.ItemsSource="{Binding Meds}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource Card}" Padding="14,12">
+                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                                    <VerticalStackLayout Grid.Column="0" Spacing="3">
+                                        <Label FontSize="15" FontAttributes="Bold"
+                                               TextColor="{StaticResource OnSurface}">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding Nom}" />
+                                                    <Span Text=" " />
+                                                    <Span Text="{Binding Dosage}"
+                                                          TextColor="{StaticResource OnSurfaceVariant}" />
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label Text="{Binding Posologie}" FontSize="12"
+                                               TextColor="{StaticResource OnSurfaceVariant}" />
+                                    </VerticalStackLayout>
+                                    <Label Grid.Column="1" Text="{Binding Depuis}"
+                                           IsVisible="{Binding AfficheDepuis}"
+                                           FontSize="12"
+                                           FontAttributes="Bold" TextColor="{StaticResource Primary}"
+                                           VerticalOptions="Center" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <BoxView Style="{StaticResource Divider}" Margin="0,18" />
+
+                <!-- Partage avec le médecin -->
+                <Label Text="Partager avec le médecin" Style="{StaticResource TitleLarge}" />
+                <Label FontSize="13" TextColor="{StaticResource OnSurfaceVariant}"
+                       Margin="0,6,0,0"
+                       Text="Transmettez cette ordonnance à votre médecin depuis votre téléphone. Vous validez chaque partage." />
+
+                <Border Style="{StaticResource CardFlat}" Margin="0,14,0,0"
+                        BackgroundColor="{StaticResource SurfaceHigh}">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Référence de l'ordonnance" FontSize="12"
+                               TextColor="{StaticResource OnSurfaceVariant}" />
+                        <Label Text="{Binding Reference}" FontSize="20" FontAttributes="Bold"
+                               CharacterSpacing="1" TextColor="{StaticResource OnSurface}" />
+                        <Label Text="{Binding Resume}" FontSize="12"
+                               TextColor="{StaticResource OnSurfaceVariant}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <Button Text="Partager au médecin" Style="{StaticResource BtnPrimary}"
+                        Margin="0,18,0,0" Clicked="Partager" />
+                <Button Text="Copier la référence" Style="{StaticResource BtnText}"
+                        Margin="0,4,0,0" Clicked="Copier" />
+                <Button Text="Supprimer l'ordonnance" Style="{StaticResource BtnText}"
+                        TextColor="{StaticResource OnMissedContainer}"
+                        Margin="0,4,0,0" Clicked="Supprimer" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
