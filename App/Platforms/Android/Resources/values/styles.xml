@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Surcharge de la charte MediRappel pour la barre de statut et de navigation.
+         colorPrimaryDark pilote la couleur de la status bar dans le thème Material. -->
+    <style name="Maui.MainTheme.Base" parent="Theme.MaterialComponents.DayNight">
+        <item name="maui_edgetoedge_optout">true</item>
+        <item name="maui_splash">false</item>
+        <item name="colorPrimary">#00696D</item>
+        <item name="colorPrimaryDark">#00696D</item>
+        <item name="colorAccent">#00696D</item>
+        <item name="android:statusBarColor">#00696D</item>
+        <item name="android:navigationBarColor">#00696D</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:actionMenuTextColor">#FFFFFF</item>
+    </style>
+</resources>
